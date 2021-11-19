@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
+import Card from './components/Card';
 import { API_URL, RESOURCES } from './utils/constants';
+import './App.scss';
 
 function App(): JSX.Element {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<null | string>(null);
   const [data, setData] = useState([]);
+  const [resource, setResource] = useState(RESOURCES.INSTALLED);
 
-  const fetchData = async (resource: string) => {
+  const fetchData = async (newResource: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_URL}${resource}`);
+      const res = await fetch(`${API_URL}${newResource}`);
       const obj = await res.json();
-      setData(obj.data[`${resource}Sdks`]);
+      setData(obj.data[`${newResource}Sdks`]);
+      setResource(newResource);
     } catch (err) {
       setError('Ops! Something went wrong with the API!');
     }
@@ -20,7 +24,7 @@ function App(): JSX.Element {
   };
 
   useEffect(() => {
-    fetchData(RESOURCES.INSTALLED);
+    fetchData(resource);
   }, []);
 
   const handleFetch = (resource: string) => {
@@ -28,10 +32,14 @@ function App(): JSX.Element {
   };
 
   return (
-    <div>
+    <div className="react-app">
       <h1>SDK App</h1>
       <Header onFetch={handleFetch} />
-      {!error && !loading && data.length > 0 && data.map(({ id, name }) => <li key={id}>{name}</li>)}
+      {loading && <p>Loading data...</p>}
+      {!loading && error && <p>{error}</p>}
+      {!loading && !error && data.length > 0 && (
+        <Card data={data} heading={`${resource} SDKs`} latestUpdate="30 july 2021" total={data.length} />
+      )}
     </div>
   );
 }

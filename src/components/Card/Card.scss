@@ -1,0 +1,28 @@
+@import '../../sass/colors';
+
+.react-app-card {
+  border: 1px solid map-get($theme-colors, 'blue');
+  margin-top: 1rem;
+  padding: 1rem;
+
+  &__heading {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid map-get($theme-colors, 'blue');
+  }
+
+  &__heading-title {
+    text-transform: capitalize;
+    color: map-get($theme-colors, 'blue');
+    margin-top: 0;
+  }
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    width: 50%;
+  }
+}
