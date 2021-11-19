@@ -25,4 +25,19 @@
   &__item {
     width: 50%;
   }
+
+  &__item-title {
+    text-decoration: underline;
+  }
+
+  &__item-list {
+    padding: 0 0.5rem;
+    li {
+      list-style: none;
+
+      span {
+        font-style: italic;
+      }
+    }
+  }
 }

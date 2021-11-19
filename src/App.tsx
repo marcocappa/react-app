@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Card from './components/Card';
 import { API_URL, RESOURCES } from './utils/constants';
-import { getCategories } from './utils';
+import { getCategories, getLatestUpdatedDate } from './utils';
 import './App.scss';
 
 function App(): JSX.Element {
@@ -11,6 +11,7 @@ function App(): JSX.Element {
   const [data, setData] = useState([]);
   const [resource, setResource] = useState(RESOURCES.INSTALLED);
   const [categories, setCategories] = useState<string[]>([]);
+  const [latestUpdatedDate, setLatestUpdatedDate] = useState<Date | null>(null);
 
   const fetchData = async (newResource: string) => {
     setLoading(true);
@@ -21,6 +22,7 @@ function App(): JSX.Element {
       setData(data);
       setResource(newResource);
       setCategories(getCategories(data));
+      setLatestUpdatedDate(getLatestUpdatedDate(data));
     } catch (err) {
       setError('Ops! Something went wrong with the API!');
     }
@@ -46,7 +48,7 @@ function App(): JSX.Element {
           categories={categories}
           data={data}
           heading={`${resource} SDKs`}
-          latestUpdate="30 july 2021"
+          latestUpdate={latestUpdatedDate}
           total={data.length}
         />
       )}
