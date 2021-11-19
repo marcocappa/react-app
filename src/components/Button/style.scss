@@ -1,0 +1,7 @@
+@import '../../sass/colors';
+
+.react-app-button {
+  padding: 8px 12px;
+  border: 1px solid map-get($theme-colors, 'blue');
+  background-color: transparent;
+}
