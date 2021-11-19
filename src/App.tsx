@@ -40,7 +40,7 @@ function App(): JSX.Element {
   return (
     <div className="react-app">
       <h1>SDK App</h1>
-      <Header onFetch={handleFetch} />
+      <Header onFetch={handleFetch} resource={resource} />
       {loading && <p>Loading data...</p>}
       {!loading && error && <p>{error}</p>}
       {!loading && !error && data.length > 0 && (

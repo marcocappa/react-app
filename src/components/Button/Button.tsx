@@ -13,7 +13,9 @@ interface Props {
 function Button({ className, children, onClick, isDisabled, ...props }: Props): JSX.Element {
   return (
     <button
-      className={`react-app-button ${classnames(className)}`}
+      className={`react-app-button ${classnames(className)} ${classnames(
+        isDisabled && 'react-app-button__is-disabled'
+      )}`}
       data-testid="test-button"
       onClick={(e) => onClick(e)}
       disabled={isDisabled}

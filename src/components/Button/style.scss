@@ -3,5 +3,19 @@
 .react-app-button {
   padding: 8px 12px;
   border: 1px solid map-get($theme-colors, 'blue');
-  background-color: transparent;
+  cursor: pointer;
+  background-color: map-get($theme-colors, 'blue');
+  transition: opacity 0.3s ease-in-out;
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: transparent;
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
