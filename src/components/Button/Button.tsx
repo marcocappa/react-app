@@ -10,13 +10,14 @@ interface Props {
   onClick: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
-function Button({ className, children, onClick, isDisabled }: Props): JSX.Element {
+function Button({ className, children, onClick, isDisabled, ...props }: Props): JSX.Element {
   return (
     <button
       className={`react-app-button ${classnames(className)}`}
       data-testid="test-button"
       onClick={(e) => onClick(e)}
       disabled={isDisabled}
+      {...props}
     >
       {children}
     </button>

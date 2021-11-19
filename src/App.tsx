@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import Button from './components/Button';
-
-const APIs_URL = {
-  INSTALLED: 'http://localhost:5001/installed',
-  UNINSTALLED: 'http://localhost:5001/uninstalled',
-};
+import Header from './components/Header';
+import { API_URL, RESOURCES } from './utils/constants';
 
 function App(): JSX.Element {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<null | string>(null);
-  const [uninstalled, setUninstalled] = useState([]);
+  const [data, setData] = useState([]);
 
-  const fetchData = async (url: string) => {
+  const fetchData = async (resource: string) => {
     setLoading(true);
     try {
-      const res = await fetch(url);
+      const res = await fetch(`${API_URL}${resource}`);
       const obj = await res.json();
-      setUninstalled(obj.data.uninstalledSdks);
+      setData(obj.data[`${resource}Sdks`]);
     } catch (err) {
       setError('Ops! Something went wrong with the API!');
     }
@@ -24,20 +20,18 @@ function App(): JSX.Element {
   };
 
   useEffect(() => {
-    fetchData(APIs_URL.UNINSTALLED);
+    fetchData(RESOURCES.INSTALLED);
   }, []);
+
+  const handleFetch = (resource: string) => {
+    fetchData(resource);
+  };
 
   return (
     <div>
       <h1>SDK App</h1>
-      <Button
-        onClick={() => {
-          console.log('clicked');
-        }}
-      >
-        Click me
-      </Button>
-      {!error && !loading && uninstalled.length > 0 && uninstalled.map(({ id, name }) => <li key={id}>{name}</li>)}
+      <Header onFetch={handleFetch} />
+      {!error && !loading && data.length > 0 && data.map(({ id, name }) => <li key={id}>{name}</li>)}
     </div>
   );
 }
