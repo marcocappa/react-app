@@ -6,9 +6,10 @@ interface Props {
   latestUpdate: string;
   total: number;
   data: IData[];
+  categories: string[];
 }
 
-function Card({ heading, latestUpdate, total, data }: Props) {
+function Card({ heading, latestUpdate, total, data, categories }: Props): JSX.Element {
   return (
     <div className="react-app-card">
       <div className="react-app-card__heading">
@@ -19,20 +20,20 @@ function Card({ heading, latestUpdate, total, data }: Props) {
         <p>{total}</p>
       </div>
       <div className="react-app-card__items">
-        {data.map(({ id, name }) => (
-          <div className="react-app-card__item" key={id}>
-            <h3 className="react-app-card__item-title">{name}</h3>
+        {categories.map((category) => (
+          <div className="react-app-card__item" key={category}>
+            <h3 className="react-app-card__item-title">{category}</h3>
             <ul className="react-app-card__item-list">
-              <li>
-                <p>
-                  sdk 1 <span>date</span>
-                </p>
-              </li>
-              <li>
-                <p>
-                  sdk 1 <span>date</span>
-                </p>
-              </li>
+              {data.map(({ id, name, lastSeenDate, categories }) => {
+                if (!categories.includes(category)) return;
+                return (
+                  <li key={id}>
+                    <p>
+                      {name} <span>{lastSeenDate}</span>
+                    </p>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))}
