@@ -1,15 +1,6 @@
 import React from 'react';
 import './Card.scss';
-
-interface IData {
-  id: string;
-  name: string;
-  categories: string[];
-  firstSeenDate: string;
-  lastSeenDate: string;
-  __typename?: string;
-}
-
+import { IData } from '../../types';
 interface Props {
   heading: string;
   latestUpdate: string;

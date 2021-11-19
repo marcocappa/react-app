@@ -4,6 +4,12 @@ import Card from './components/Card';
 import { API_URL, RESOURCES } from './utils/constants';
 import './App.scss';
 
+import { IData } from './types';
+
+function getCategories(data: IData[]): string[] {
+  return [];
+}
+
 function App(): JSX.Element {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<null | string>(null);
